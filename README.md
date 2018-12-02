@@ -13,7 +13,10 @@ Works with ipv4+6!
 http://mtr.bambusmedia.de/ 
 
 ## Installation
+Compile mtr yourself  
 https://github.com/blackjack4494/mtr-ext  
+
+or use the following:  
 
 (NOTE! was built on Ubuntu18.04 - May not work everywhere!)  
 There is a compiled version of mtr in this project included.
@@ -24,6 +27,7 @@ git clone https://github.com/blackjack4494/mtr-web
 cd mtr-web
 pip install Flask-Sockets gunicorn
 ```
+I may provide more precompiled version (right now I have ubuntu18 - included - and one for arm rpi2 - not included)
 
 ## Usage (client with integrated server)
 

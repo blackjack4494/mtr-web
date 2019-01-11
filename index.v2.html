@@ -113,11 +113,13 @@
 			  if (data[0] < dLast) {
 			    godCounter++;
 				dLast = 0;
+			  } else {
+			    dLast++;
 			  }
               if (angular.isArray(data)) {
                 response[data[0]] = data;
-				godArray[godCounter] = [data[0], data];
-				godAlt[godCounter] = [data[0], data];
+				godArray[godCounter[data[0]]] = data;
+				godAlt[godCounter[data[0]]] = data;
               } else {
                 // error message
                 response[0] = [0, data];

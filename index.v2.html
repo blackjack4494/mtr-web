@@ -133,6 +133,7 @@
       .controller('SomeController', function($scope, mtr) {
         $scope.mtr = mtr;
         $scope.protocol = 'ICMP';
+		$scope.version = '4';
         $scope.dns = false;
 
         $scope.submit = function(hostname, protocol, version, dns) {
@@ -141,7 +142,7 @@
             hostname: hostname,
             protocol: protocol,
             version: version,
-            no_dns: dns
+            no_dns: !dns
           }));
         };
       });

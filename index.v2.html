@@ -49,7 +49,7 @@
               <option value="6">IPv6</option>
             </select>
             <label class="checkbox-inline">
-              <input type="checkbox" value="dns" ng-model="dns" checked> Use DNS
+              <input type="checkbox" value="dns" ng-model="dns" > Use DNS
             </label>
             <button type="submit" class="btn btn-default">Trace</button>
           </th>
@@ -81,6 +81,7 @@
 	  var godArray = new Array(300);
 	  var godAlt = [];
 	  var godCounter = 0;
+	  var dLast = 0;
 	
       angular.module('MtrApp', ['ngWebSocket'])
       .factory('mtr', function($websocket) {
@@ -96,7 +97,7 @@
               response[i] = [];
             }
 
-            ws = $websocket('ws//' + document.getElementById('wsaddr').value);
+            ws = $websocket('ws://' + document.getElementById('wsaddr').value);
 
             //var url = new URL(window.location.href);
             //url.protocol = url.protocol.replace('http', 'ws');
@@ -108,11 +109,15 @@
 
             ws.onMessage(function(message) {
               var data = JSON.parse(message.data);
+			  //a bit hacky. if packets are not in order this will break
+			  if (data[0] < dLast) {
+			    godCounter++;
+				dLast = 0;
+			  }
               if (angular.isArray(data)) {
                 response[data[0]] = data;
-				godArray[godCounter] = data;
-				godAlt[godCounter] = data;
-				godCounter++;
+				godArray[godCounter] = [data[0], data];
+				godAlt[godCounter] = [data[0], data];
               } else {
                 // error message
                 response[0] = [0, data];
@@ -128,7 +133,7 @@
       .controller('SomeController', function($scope, mtr) {
         $scope.mtr = mtr;
         $scope.protocol = 'ICMP';
-        $scope.dns = true;
+        $scope.dns = false;
 
         $scope.submit = function(hostname, protocol, version, dns) {
           // if (!hostname) { return; }
@@ -136,7 +141,7 @@
             hostname: hostname,
             protocol: protocol,
             version: version,
-            no_dns: !dns
+            no_dns: dns
           }));
         };
       });

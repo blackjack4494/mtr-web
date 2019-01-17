@@ -127,8 +127,9 @@
 
             ws.onMessage(function(message) {
               var data = JSON.parse(message.data);
-			  
-			  //////////////
+			  //a bit hacky. if packets are not in order this will break
+			  if (data[0] < dLast) {
+				//////////////
 			  // plotly
 			  var cnt = 0;
 
@@ -138,7 +139,7 @@
 
 				var update = {
 				x:  [[time]],
-				y: [data[4]]
+				y: [[data[5]]]
 				}
 	
 				Plotly.extendTraces('graph', update, [0])
@@ -146,9 +147,6 @@
 				if(cnt === 100) clearInterval(interval);
 				}, 1000);
 			  //////////////
-			  
-			  //a bit hacky. if packets are not in order this will break
-			  if (data[0] < dLast) {
 			    godCounter++;
 				dLast = 0;
 			  } else {

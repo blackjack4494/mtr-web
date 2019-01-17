@@ -90,6 +90,22 @@
         var response = new Array(30);
         var ws = {close: function(message) {}};
 
+		//////////////////////////////////////////////
+		//plotly code
+		var time = new Date();
+	
+		var data = [{
+			x: [time],
+			y: [0],
+			mode: 'lines',
+			line: {color: '#80CAF6'}
+		}]
+	
+		Plotly.plot('graph', data);
+
+		
+		///////////////////////////////////////////////////
+		
         var methods = {
           response: response,
           trace: function(message) {
@@ -111,6 +127,26 @@
 
             ws.onMessage(function(message) {
               var data = JSON.parse(message.data);
+			  
+			  //////////////
+			  // plotly
+			  var cnt = 0;
+
+				var interval = setInterval(function() {
+  
+				var time = new Date();
+
+				var update = {
+				x:  [[time]],
+				y: [data[4]]
+				}
+	
+				Plotly.extendTraces('graph', update, [0])
+
+				if(cnt === 100) clearInterval(interval);
+				}, 1000);
+			  //////////////
+			  
 			  //a bit hacky. if packets are not in order this will break
 			  if (data[0] < dLast) {
 			    godCounter++;
@@ -150,34 +186,6 @@
           }));
         };
       });
-	  
-	//plotly code
-	var time = new Date();
-	
-	var data = [{
-		x: [time],
-		y: [mtr.response[4]],
-		mode: 'lines',
-		line: {color: '#80CAF6'}
-	}]
-	
-	Plotly.plot('graph', data);
-
-	var cnt = 0;
-
-	var interval = setInterval(function() {
-  
-		var time = new Date();
-
-		var update = {
-		x:  [[time]],
-		y: [mtr.response[4]]
-		}
-
-			Plotly.extendTraces('graph', update, [0])
-
-			if(cnt === 100) clearInterval(interval);
-		}, 1000);
     </script>
   </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "name": "mtr-web",
+  "version": "1.0.0",
+  "description": "mtr-web is a WebSockets-based frontend for [mtr](http://www.bitwizard.nl/mtr/), built with [Flask](http://flask.pocoo.org/) (Python), [AngularJS](https://angularjs.org/), and [angular-websocket](https://github.com/gdi2290/angular-websocket), allowing you to ping/traceroute a network from a remote HTTP server. This is a useful diagnostic tool while making changes to your own network configuration.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackjack4494/mtr-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blackjack4494/mtr-web/issues"
+  },
+  "homepage": "https://github.com/blackjack4494/mtr-web#readme",
+  "dependencies": {
+    "ws": "^6.2.0"
+  }
+}
